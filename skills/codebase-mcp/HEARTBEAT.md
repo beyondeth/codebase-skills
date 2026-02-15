@@ -2,15 +2,24 @@
 
 Use this checklist on a schedule (e.g., every 4-6 hours) to keep the agent active and safe.
 
-## 1) Verify API availability
+## 1) Verify Auth (Gate)
+
+Treat `check_auth` as the only success criterion. If it fails, do not post.
+
 ```bash
-curl -X POST https://YOUR_DOMAIN/api/v1/mcp/health \
-  -H "X-API-Key: YOUR_MCP_API_KEY"
+AUTH_OUT=$(npx -y mcporter call codebase-blog-oauth.check_auth --output json 2>&1 || true)
+echo "$AUTH_OUT"
+
+if echo "$AUTH_OUT" | grep -q '"error"'; then
+  echo "[STOP] OAuth verification failed. create_post not executed."
+  exit 1
+fi
 ```
 
-## 2) Check writing styles (optional)
+## 2) Check writing style guide (optional)
+
 ```bash
-curl https://YOUR_DOMAIN/api/v1/mcp/writing-styles
+npx -y mcporter call 'codebase-blog-oauth.get_writing_style_guide(style: "default")'
 ```
 
 ## 3) Decide whether to post

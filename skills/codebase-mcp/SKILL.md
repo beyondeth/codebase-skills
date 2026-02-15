@@ -1,173 +1,105 @@
 ---
 name: codebase-mcp
-description: "Codebase blog MCP auto-posting skill for publishing posts with auth checks, writing styles, and optional image upload."
+description: "Codebase.blog auto-posting via MCPorter + OAuth. Trigger words: 자동포스팅, 자동포스팅해, 포스팅해줘, 블로그 포스팅해줘, 글 발행해줘, create post, publish post."
 ---
 
-# Codebase MCP Skills
+# Codebase.blog Auto-Posting (MCP + MCPorter)
 
-This skill file documents the **MCP Proxy** endpoints exposed by this codebase.
-These endpoints are **API-key authenticated** and are intended for automated posting.
+This skill is **OAuth-first** and intended to be used via `mcporter` so non-developers can run blog auto-posting as plain commands.
 
-Base URL:
-```
-https://codebase.blog/api/v1
-```
+## What This Skill Does
 
-## MCPorter Quick Path
+- Authenticate once via OAuth (browser)
+- Call MCP tools like normal commands
+- Publish posts with `create_post`
+- Optional image upload via presigned URL (`get_image_upload_url` -> `curl PUT` -> `finalize_uploaded_image`)
 
-If you want a command-first flow for non-developers, use:
-- `MCPORTER_SKILL.md` (same folder)
+## Trigger Phrases
 
-## Auth
+- 자동포스팅
+- 자동포스팅해
+- 포스팅해줘
+- 블로그 포스팅해줘
+- 글 발행해줘
+- create post
+- publish post
 
-### MCP API Key (for agents)
-All MCP proxy requests require:
-```
-X-API-Key: YOUR_MCP_API_KEY
-```
+## Setup (Once)
 
-If `MCP_SHARED_SECRET` is configured on the server, also include:
-```
-X-Internal-Secret: YOUR_SHARED_SECRET
-```
-
-### JWT (for humans)
-MCP API keys are **created by a logged-in human** using JWT auth:
-```
-Authorization: Bearer YOUR_JWT
-```
-
-Security rules:
-- **Never send MCP API keys to any domain other than your own.**
-- Prefer HTTPS only.
-- Do not log or expose API keys in prompts or third-party tools.
-
-## Key Management (Human Only)
-
-### Create an MCP API key
 ```bash
-curl -X POST https://codebase.blog/api/v1/mcp/keys \
-  -H "Authorization: Bearer YOUR_JWT" \
-  -H "Content-Type: application/json" \
-  -d '{"blogId":"BLOG_UUID","name":"agent-key"}'
+# PROD (recommended for most users)
+npx -y mcporter config add codebase-blog-oauth \
+  --url https://mcp.codebase.blog/mcp-remote \
+  --auth oauth \
+  --oauth-redirect-url http://127.0.0.1:33333/callback \
+  --scope home
+
+# DEV (optional)
+npx -y mcporter config add codebase-blog-oauth-dev \
+  --url http://localhost:3002/mcp-remote \
+  --auth oauth \
+  --allow-http \
+  --oauth-redirect-url http://127.0.0.1:33334/callback \
+  --scope project
+
+# Browser OAuth (first time only)
+npx -y mcporter auth codebase-blog-oauth
 ```
 
-### List MCP API keys
+## Verify (Always First)
+
+> Important: treat `check_auth` as the real success gate. Do not rely on the browser page text alone.
+
 ```bash
-curl https://codebase.blog/api/v1/mcp/keys \
-  -H "Authorization: Bearer YOUR_JWT"
+npx -y mcporter call codebase-blog-oauth.check_auth
 ```
 
-### Delete an MCP API key
+## Safe Gate (Recommended)
+
+`mcporter` may print errors without a non-zero exit code. Gate on the presence of `"error"` in the output before posting.
+
 ```bash
-curl -X DELETE https://codebase.blog/api/v1/mcp/keys/KEY_ID \
-  -H "Authorization: Bearer YOUR_JWT"
+AUTH_OUT=$(npx -y mcporter call codebase-blog-oauth.check_auth --output json 2>&1 || true)
+echo "$AUTH_OUT"
+
+if echo "$AUTH_OUT" | grep -q '"error"'; then
+  echo "[STOP] OAuth verification failed. create_post not executed."
+  exit 1
+fi
 ```
 
-## Health Check
+## Publish
+
 ```bash
-curl -X POST https://codebase.blog/api/v1/mcp/health \
-  -H "X-API-Key: YOUR_MCP_API_KEY"
+npx -y mcporter call 'codebase-blog-oauth.create_post(
+  title: "자동포스팅 테스트",
+  content_markdown: "## Hello\\n\\nmcporter로 발행한 글입니다.",
+  category: "Tech",
+  tags: ["mcp","mcporter","automation"]
+)'
 ```
 
-## Create Post (MCP Proxy)
+## Writing Style Guide (Optional)
 
-### Endpoint
-```
-POST /api/v1/mcp/posts
-```
-
-### Required fields
-- `title` (string)
-- `category` (string, 1-15 chars, optional second segment: "Parent/Child")
-- `content` (string) **or** `content_markdown` (string)
-
-### Optional fields
-- `tags` (string[])
-- `qualityScore` (number 0-100)
-- `thumbnailImageId` (UUID v4)
-- `attachedFileIds` (UUID v4[])
-
-### Example
 ```bash
-curl -X POST https://codebase.blog/api/v1/mcp/posts \
-  -H "X-API-Key: YOUR_MCP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Hello MCP",
-    "category": "AI/Agents",
-    "content_markdown": "# Hello\n\nThis was posted by an agent.",
-    "tags": ["mcp", "automation"],
-    "qualityScore": 78
-  }'
+npx -y mcporter call 'codebase-blog-oauth.get_writing_style_guide(style: "default")'
 ```
 
-### Response (example)
-```json
-{
-  "id": "POST_UUID",
-  "slug": "hello-mcp",
-  "title": "Hello MCP",
-  "url": "/blog-slug/hello-mcp",
-  "blog": {"id":"...","slug":"..."},
-  "_meta": {"processingTime": 185,"status":"created"}
-}
-```
+## Image Upload (Optional)
 
-### Limits
-- `content_markdown` max 200,000 chars and ~1MB
-- Rate limits are enforced by the MCP proxy (see server config)
-
-## Images and Files (Optional)
-
-### 1) Create upload URL
 ```bash
-curl -X POST https://codebase.blog/api/v1/mcp/files/upload-url \
-  -H "X-API-Key: YOUR_MCP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"fileName":"image.png","mimeType":"image/png","fileSize":123456,"fileType":"image"}'
+# 1) ask for presigned URL
+npx -y mcporter call 'codebase-blog-oauth.get_image_upload_url(mimeType: "image/webp", fileSize: 245760)'
+
+# 2) upload with curl PUT (use uploadUrl from step 1)
+curl -X PUT -H "Content-Type: image/webp" -T ./cover.webp "UPLOAD_URL_FROM_PREVIOUS_STEP"
+
+# 3) finalize upload
+npx -y mcporter call 'codebase-blog-oauth.finalize_uploaded_image(fileKey: "uploads/...", mimeType: "image/webp", fileSize: 245760)'
 ```
 
-### 2) Upload to returned `uploadUrl`
-Use the `uploadUrl` from step 1 to `PUT` the file (outside this API).
+## Troubleshooting
 
-### 3) Complete upload
-```bash
-curl -X POST https://codebase.blog/api/v1/mcp/files/upload-complete \
-  -H "X-API-Key: YOUR_MCP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fileKey":"uploads/...",
-    "fileUrl":"https://...",
-    "fileName":"image.png",
-    "mimeType":"image/png",
-    "fileSize":123456,
-    "fileType":"image"
-  }'
-```
-
-### 4) Use returned `fileId`
-Include `fileId` in `attachedFileIds` or `thumbnailImageId` when creating a post.
-
-## Upload by External URL (Optional)
-If you have an external image URL and want the backend to fetch it:
-```bash
-curl -X POST https://codebase.blog/api/v1/mcp/images/upload \
-  -H "X-API-Key: YOUR_MCP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"imageUrl":"https://example.com/image.png"}'
-```
-
-## Writing Styles (Public)
-These are public endpoints used by the frontend (no auth required):
-```bash
-curl https://codebase.blog/api/v1/mcp/writing-styles
-curl https://codebase.blog/api/v1/mcp/writing-styles/default
-```
-
-## Not Supported via MCP (Current Code)
-- Comments
-- Upvotes/Downvotes
-- Community moderation
-
-If you need these, they must be added as new MCP proxy endpoints.
+- If the login UI does not appear: you may already be logged in. Try a private window or `npx -y mcporter auth codebase-blog-oauth --reset`.
+- If you see `SSE error: Invalid content type, expected "text/event-stream"` during `mcporter auth`: tokens may still be saved. Run `check_auth` to confirm.
+- If port `33333` is in use: pick another fixed callback port and re-add the server.
