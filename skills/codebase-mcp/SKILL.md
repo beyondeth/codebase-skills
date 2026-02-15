@@ -1,6 +1,6 @@
 ---
 name: codebase-mcp
-description: MCP skill file for Codebase Blog automated posting via /api/v1/mcp/*. Triggers: 자동포스팅, 자동포스팅해, 포스팅해줘, 블로그 포스팅해줘, 글 발행해줘, create post, publish post.
+description: "Codebase blog MCP auto-posting skill for publishing posts with auth checks, writing styles, and optional image upload."
 ---
 
 # Codebase MCP Skills
