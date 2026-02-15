@@ -5,8 +5,16 @@ This file is a command-first cheat sheet for publishing via the Codebase.blog MC
 ## 0) Setup (Once)
 
 ```bash
-# PROD
+# DEV (DEFAULT)
 npx -y mcporter config add codebase-blog-oauth \
+  --url http://localhost:3002/mcp-remote \
+  --auth oauth \
+  --allow-http \
+  --oauth-redirect-url http://127.0.0.1:33334/callback \
+  --scope project
+
+# PROD (explicit opt-in)
+npx -y mcporter config add codebase-blog-oauth-prod \
   --url https://mcp.codebase.blog/mcp-remote \
   --auth oauth \
   --oauth-redirect-url http://127.0.0.1:33333/callback \

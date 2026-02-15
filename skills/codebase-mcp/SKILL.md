@@ -27,20 +27,21 @@ This skill is **OAuth-first** and intended to be used via `mcporter` so non-deve
 ## Setup (Once)
 
 ```bash
-# PROD (recommended for most users)
+# DEV (DEFAULT for this skill)
+# - Safe default: prevents accidental production posting while testing.
 npx -y mcporter config add codebase-blog-oauth \
-  --url https://mcp.codebase.blog/mcp-remote \
-  --auth oauth \
-  --oauth-redirect-url http://127.0.0.1:33333/callback \
-  --scope home
-
-# DEV (optional)
-npx -y mcporter config add codebase-blog-oauth-dev \
   --url http://localhost:3002/mcp-remote \
   --auth oauth \
   --allow-http \
   --oauth-redirect-url http://127.0.0.1:33334/callback \
   --scope project
+
+# PROD (explicit opt-in)
+npx -y mcporter config add codebase-blog-oauth-prod \
+  --url https://mcp.codebase.blog/mcp-remote \
+  --auth oauth \
+  --oauth-redirect-url http://127.0.0.1:33333/callback \
+  --scope home
 
 # Browser OAuth (first time only)
 npx -y mcporter auth codebase-blog-oauth
