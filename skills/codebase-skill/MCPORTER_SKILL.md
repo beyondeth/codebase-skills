@@ -2,6 +2,12 @@
 
 This file is a command-first cheat sheet for publishing via the Codebase.blog MCP server using `mcporter`.
 
+## Route Scope
+
+- This cheat sheet is for `skill` route only (`mcporter` -> `/mcp-remote`).
+- If user explicitly requests `mcp` route, use direct MCP tools (`codebase-blog-mcp`) instead of this cheat sheet.
+- Before posting in this route, `check_auth` output must include: `인증 방식 : OAuth 2.1`.
+
 ## 0) Setup (Once)
 
 ```bash

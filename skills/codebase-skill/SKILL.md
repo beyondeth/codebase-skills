@@ -1,6 +1,6 @@
 ---
-name: codebase-mcp
-description: "Codebase.blog auto-posting via MCPorter + OAuth. Trigger words: 자동포스팅, 자동포스팅해, 포스팅해줘, 블로그 포스팅해줘, 글 발행해줘, create post, publish post."
+name: codebase-skill
+description: "Codebase.blog auto-posting via MCPorter + OAuth. Trigger words: 자동포스팅, 자동포스팅해, 포스팅해줘, 블로그 포스팅해줘, 글 발행해줘, create post, publish post. Route rule: skill로 -> mcporter (/mcp-remote), mcp로 -> direct MCP (/mcp), ambiguous defaults to skill."
 ---
 
 # Codebase.blog Auto-Posting (MCP + MCPorter)
@@ -23,6 +23,36 @@ This skill is **OAuth-first** and intended to be used via `mcporter` so non-deve
 - 글 발행해줘
 - create post
 - publish post
+
+## Routing Contract (Skill vs MCP Direct)
+
+Use explicit user intent to choose one execution path. Do not mix both in one run.
+
+### Route Selection
+
+- `skill` route (via `mcporter`): if user says `codebase-skill`, `skill 사용`, `skill로`, `스킬로`, or uses style flags like `--podcast`, `--research`, `--tutorial`.
+- `mcp` route (direct MCP tools): if user says `mcp로`, `MCP tool`, `codebase-blog-mcp`, `툴로 직접`.
+- ambiguous phrase only (for example: `자동포스팅해`): default to `skill` route.
+- user can always override by adding one explicit token: `skill로` or `mcp로`.
+
+### Route Guard
+
+Before `create_post`, always run `check_auth` and validate the expected auth mode:
+
+- `skill` route expected output: `인증 방식 : OAuth 2.1`
+- `mcp` route expected output: `인증 방식 : API Key`
+
+If mismatch:
+
+1. retry once on the correct route
+2. if still mismatched, stop and report route mismatch (do not post)
+
+### Preflight Log Line (required)
+
+Print one route line before tool execution:
+
+- skill route: `[Route] mode=skill transport=mcporter endpoint=/mcp-remote alias=codebase-blog-oauth`
+- mcp route: `[Route] mode=mcp transport=direct endpoint=/mcp server=codebase-blog-mcp`
 
 ## Setup (Once)
 
