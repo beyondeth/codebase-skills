@@ -48,7 +48,7 @@ npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 `SKILLS vs MCP` 선택 질문부터 설치까지 단계적으로 안내할 수 있습니다.
 
 ```bash
-curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
 ```
 
 ## MCP 직접 설정

@@ -45,7 +45,7 @@ If `codebase-skill` appears, installation is complete.
 ## LLM Agents Guide (raw)
 
 ```bash
-curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
 ```
 
 ## MCP Direct Setup

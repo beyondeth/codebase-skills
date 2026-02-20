@@ -8,7 +8,7 @@ Paste this into your LLM agent session:
 
 ```text
 Install and configure Codebase auto-posting by following this guide:
-https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
+https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
 ```
 
 ---

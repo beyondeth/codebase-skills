@@ -8,7 +8,7 @@ English version: [installation.en.md](./installation.en.md)
 
 ```text
 Codebase 자동포스팅 설치를 이 가이드대로 진행해줘:
-https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
+https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
 ```
 
 ---
