@@ -1,13 +1,13 @@
-# 설치 가이드 (Korean)
+# Installation Guide (English)
 
-English version: [installation.en.md](./installation.en.md)
+Korean version: [installation.md](./installation.md)
 
 ## For Humans
 
-아래 문장을 LLM 에이전트 채팅에 그대로 붙여 넣으세요:
+Paste this into your LLM agent session:
 
 ```text
-Codebase 자동포스팅 설치를 이 가이드대로 진행해줘:
+Install and configure Codebase auto-posting by following this guide:
 https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
 ```
 
@@ -15,55 +15,55 @@ https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/inst
 
 ## For LLM Agents
 
-Codebase 자동포스팅 설치를 도와주는 에이전트라면 아래 순서를 따르세요.
+If you are helping a user install Codebase auto-posting, follow this workflow.
 
-### Step 0) 설치 전에 먼저 질문
+### Step 0) Ask before installing
 
-1. 어떤 방식으로 설치할까요?
-   - `SKILLS` (초보자/빠른 시작)
-   - `MCP direct` (고급 사용자/수동 제어)
-2. 어떤 AI 에이전트를 사용하나요?
+1. Which method do you want?
+   - `SKILLS` (best for beginners)
+   - `MCP direct` (advanced/manual control)
+2. Which AI agents are you using?
    - Codex
    - Claude Code
    - Gemini CLI
    - Antigravity
-3. OS는 무엇인가요?
+3. Which OS are you using?
    - macOS / Linux / Windows
-4. (`MCP direct` 선택 시) Codebase MCP API 키를 이미 가지고 있나요?
-   - 없다면 `https://codebase.blog/settings/api-keys`에서 생성하도록 안내
+4. If `MCP direct`, do you already have a Codebase MCP API key?
+   - If not, guide the user to create one at `https://codebase.blog/settings/api-keys`.
 
-### Step 1) SKILLS vs MCP 차이 설명 (짧게)
+### Step 1) Explain SKILLS vs MCP direct (brief)
 
-- 기능은 대부분 동일함 (같은 MCP 백엔드 기능 사용)
-- 차이는 설정 난이도
-  - `SKILLS`: 설치와 사용이 단순
-  - `MCP direct`: 토큰/설정/보안 정책을 직접 제어
-- 에이전트별 동작 차이로 출력 톤/형식은 약간 달라질 수 있음
+- Functionality is mostly the same in practice (same MCP backend capabilities).
+- Main difference is setup complexity:
+  - `SKILLS`: easier setup and faster onboarding.
+  - `MCP direct`: manual control over token/config/security policy.
+- Output tone/format can vary slightly by agent behavior.
 
-### Step 2A) 사용자가 SKILLS를 선택한 경우
+### Step 2A) If user chose SKILLS
 
-사용자 답변으로 `<AGENT_FLAGS>` 조합:
+Create `<AGENT_FLAGS>` from user answers:
 
 - Codex -> `-a codex`
 - Claude Code -> `-a claude-code`
 - Gemini CLI -> `-a gemini-cli`
 - Antigravity -> `-a antigravity`
 
-설치:
+Install:
 
 ```bash
 npx -y skills add beyondeth/codebase-skills --skill codebase-skill <AGENT_FLAGS> -g -y
 ```
 
-검증:
+Verify:
 
 ```bash
 npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 ```
 
-### Step 2B) 사용자가 MCP direct를 선택한 경우
+### Step 2B) If user chose MCP direct
 
-`<YOUR_API_KEY>`를 실제 키로 바꿔 선택한 에이전트만 설정합니다.
+Use `<YOUR_API_KEY>` and configure selected agents only.
 
 #### Codex (CLI)
 
@@ -119,21 +119,21 @@ claude mcp add --transport http codebase-blog-mcp https://mcp.codebase.blog/mcp 
 }
 ```
 
-### Step 3) 스모크 테스트
+### Step 3) Smoke test
 
 ```text
 위 내용 자동포스팅해 --default
 ```
 
-실패 시 아래를 함께 수집:
+If it fails, collect:
 
-- 설치 방식 (`SKILLS` / `MCP direct`)
-- 사용 에이전트
-- 에러 원문
-- (`MCP direct`) API 키 설정 여부
+- install method (`SKILLS` or `MCP direct`)
+- selected agent
+- exact error message
+- whether API key is set (for MCP direct)
 
-### 안전 수칙
+### Safety
 
-- API 키 전체값을 채팅/로그에 노출하지 말 것
-- 인증 모드(OAuth/API Key)를 임의로 변경하지 말고 사용자에게 먼저 확인할 것
+- Never expose full API keys in logs/chat history.
+- Do not switch auth mode silently; confirm with user first.
 

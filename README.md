@@ -1,26 +1,31 @@
 # codebase-skills
 
-Codebase.blog auto-posting skill package for multi-agent environments.
+Codebase.blog 자동포스팅을 위한 스킬 패키지입니다.  
+기본 설치는 `vercel-labs/skills` 흐름을 사용합니다.
 
-This repository is designed for `vercel-labs/skills` installation flow.
+English version: [README.en.md](./README.en.md)
 
-## What You Get
+## 지원 대상
 
-- `codebase-skill`: auto-posting workflow skill
-- Compatible targets: `codex`, `claude-code`, `gemini-cli`, `antigravity`
+- `codebase-skill` (자동포스팅 워크플로)
+- 지원 에이전트: `codex`, `claude-code`, `gemini-cli`, `antigravity`
 
-## Quick Install (Recommended)
+## 설치 방법 선택
 
-Install one skill to all supported agents in one command:
+- 초보자: **SKILLS 설치** (가장 간단)
+- 고급 사용자: **MCP 직접 설정** (토큰/설정 직접 제어)
+- 자동 안내: **LLM Agents 가이드** 사용
+
+## 빠른 설치 (전체 에이전트)
 
 ```bash
-DISABLE_TELEMETRY=1 npx -y skills add beyondeth/codebase-skills \
+npx -y skills add beyondeth/codebase-skills \
   --skill codebase-skill \
   -a codex -a claude-code -a gemini-cli -a antigravity \
   -g -y
 ```
 
-## Agent-Specific Install
+## 에이전트별 설치
 
 ```bash
 npx -y skills add beyondeth/codebase-skills --skill codebase-skill -a codex -g -y
@@ -29,34 +34,46 @@ npx -y skills add beyondeth/codebase-skills --skill codebase-skill -a gemini-cli
 npx -y skills add beyondeth/codebase-skills --skill codebase-skill -a antigravity -g -y
 ```
 
-## Verify Installation
+## 설치 확인
 
 ```bash
-npx -y skills list -a codex -a claude-code -a gemini-cli -a antigravity
+npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 ```
 
-Check that `codebase-skill` appears in the installed list.
+`codebase-skill`이 표시되면 정상입니다.
 
-## Update / Remove
+## LLM Agents용 설치 가이드
+
+아래 raw 문서를 에이전트에게 전달하면,  
+`SKILLS vs MCP` 선택 질문부터 설치까지 단계적으로 안내할 수 있습니다.
 
 ```bash
-# Check updates
+curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/main/docs/guide/installation.md
+```
+
+## MCP 직접 설정
+
+MCP 직접 설정은 아래 문서 참고:
+
+- 기본(한국어): [docs/guide/installation.md](./docs/guide/installation.md)
+- English: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+
+API 키 생성은 `https://codebase.blog/settings/api-keys`에서 진행합니다.
+
+## 업데이트 / 제거
+
+```bash
 npx -y skills check
-
-# Apply updates
 npx -y skills update
-
-# Remove this skill from selected agents
-npx -y skills remove codebase-skill -a codex -a claude-code -a gemini-cli -a antigravity -y
+npx -y skills remove codebase-skill -a codex -a claude-code -a gemini-cli -a antigravity -g -y
 ```
 
-## Notes
+## 참고
 
-- `-g` installs globally (home directory), available across projects.
-- Remove `-g` to install only in the current project.
-- If symlink is not available in your environment, `skills` CLI falls back to copy mode.
+- `-g` 옵션: 전역 설치(모든 프로젝트에서 사용)
+- `-g` 제거 시: 현재 프로젝트에만 설치
 
-## Skill Layout
+## 레이아웃
 
 ```text
 skills/
@@ -65,4 +82,9 @@ skills/
     HEARTBEAT.md
     MCPORTER_SKILL.md
     MESSAGING.md
+
+docs/
+  guide/
+    installation.md
+    installation.en.md
 ```
