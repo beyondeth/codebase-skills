@@ -19,7 +19,7 @@ Supported agents:
 - `gemini-cli`
 - `antigravity`
 
-## Which install path should you choose?
+## Choose one install path first
 
 There are two ways to use Codebase auto-posting.
 
@@ -66,14 +66,15 @@ Important:
 - `SKILLS install` does not mean “your API key is already configured”.
 - It means the workflow docs, style guides, and routing rules are now installed for your agent.
 
-## MCP direct setup
+## Installation docs
 
-If you want to connect MCP manually, read these docs:
+- `SKILLS install` guide: [docs/guide/skills-installation.en.md](./docs/guide/skills-installation.en.md)
+- `MCP direct` guide: [docs/guide/mcp-direct.en.md](./docs/guide/mcp-direct.en.md)
+- Install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
 
-- Korean install guide: [docs/guide/installation.md](./docs/guide/installation.md)
-- English install guide: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+Create API keys at:
 
-Create API keys at: `https://codebase.blog/settings/api-keys`
+- `https://codebase.blog/settings/api-keys`
 
 ## First-use workflow
 
@@ -174,8 +175,12 @@ Notes:
 
 ## Documentation links
 
-- Korean install guide: [docs/guide/installation.md](./docs/guide/installation.md)
-- English install guide: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+- Korean install path chooser: [docs/guide/installation.md](./docs/guide/installation.md)
+- English install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+- Korean SKILLS install guide: [docs/guide/skills-installation.md](./docs/guide/skills-installation.md)
+- English SKILLS install guide: [docs/guide/skills-installation.en.md](./docs/guide/skills-installation.en.md)
+- Korean MCP direct guide: [docs/guide/mcp-direct.md](./docs/guide/mcp-direct.md)
+- English MCP direct guide: [docs/guide/mcp-direct.en.md](./docs/guide/mcp-direct.en.md)
 - Korean style guide: [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
 - English style guide: [docs/guide/writing-styles.en.md](./docs/guide/writing-styles.en.md)
 - Main skill doc: [skills/codebase-skill/SKILL.md](./skills/codebase-skill/SKILL.md)
@@ -207,6 +212,10 @@ docs/
   guide/
     installation.md
     installation.en.md
+    skills-installation.md
+    skills-installation.en.md
+    mcp-direct.md
+    mcp-direct.en.md
     writing-styles.md
     writing-styles.en.md
 ```

@@ -19,7 +19,7 @@ English version: [README.en.md](./README.en.md)
 - `gemini-cli`
 - `antigravity`
 
-## 먼저 무엇을 선택해야 하나요?
+## 먼저 설치 경로를 하나만 고르세요
 
 설치 방식은 2가지입니다.
 
@@ -66,14 +66,15 @@ npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 - `SKILLS 설치`는 스킬 문서와 스타일 파일을 에이전트에 넣는 단계입니다.
 - API 키를 직접 저장하는 방식이 아니라, 에이전트가 skill 문서에 따라 OAuth 또는 MCP direct 흐름을 안내하도록 만드는 방식입니다.
 
-## MCP 직접 설정
+## 설치 문서 바로가기
 
-직접 MCP를 붙이고 싶다면 아래 문서를 보세요.
+- `SKILLS 설치` 가이드: [docs/guide/skills-installation.md](./docs/guide/skills-installation.md)
+- `MCP direct` 가이드: [docs/guide/mcp-direct.md](./docs/guide/mcp-direct.md)
+- 설치 경로 선택 문서: [docs/guide/installation.md](./docs/guide/installation.md)
 
-- 한국어 설치 가이드: [docs/guide/installation.md](./docs/guide/installation.md)
-- English install guide: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+API 키 생성:
 
-API 키는 `https://codebase.blog/settings/api-keys`에서 생성합니다.
+- `https://codebase.blog/settings/api-keys`
 
 ## 첫 사용 흐름
 
@@ -155,7 +156,7 @@ API 키는 `https://codebase.blog/settings/api-keys`에서 생성합니다.
 ## LLM Agents용 설치 가이드
 
 아래 raw 문서를 에이전트에게 그대로 전달하면,  
-`SKILLS 설치 vs MCP 직접 설정` 선택부터 단계적으로 안내할 수 있습니다.
+`SKILLS 설치`와 `MCP direct`를 먼저 구분한 뒤 단계적으로 안내할 수 있습니다.
 
 ```bash
 curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
@@ -176,8 +177,10 @@ npx -y skills remove codebase-skill -a codex -a claude-code -a gemini-cli -a ant
 
 ## 문서 바로가기
 
-- 설치 가이드(한국어): [docs/guide/installation.md](./docs/guide/installation.md)
-- Installation guide (English): [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+- 설치 경로 선택(한국어): [docs/guide/installation.md](./docs/guide/installation.md)
+- Install path chooser (English): [docs/guide/installation.en.md](./docs/guide/installation.en.md)
+- SKILLS 설치 가이드: [docs/guide/skills-installation.md](./docs/guide/skills-installation.md)
+- MCP direct 가이드: [docs/guide/mcp-direct.md](./docs/guide/mcp-direct.md)
 - 스타일 가이드(한국어): [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
 - Style guide (English): [docs/guide/writing-styles.en.md](./docs/guide/writing-styles.en.md)
 - skill 메인 문서: [skills/codebase-skill/SKILL.md](./skills/codebase-skill/SKILL.md)
@@ -209,6 +212,10 @@ docs/
   guide/
     installation.md
     installation.en.md
+    skills-installation.md
+    skills-installation.en.md
+    mcp-direct.md
+    mcp-direct.en.md
     writing-styles.md
     writing-styles.en.md
 ```
