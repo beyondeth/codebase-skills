@@ -1,8 +1,8 @@
 # Writing Styles Guide
 
-This guide explains what each bundled writing style is for and when it should be used.
+This guide helps users quickly choose the right bundled style in `codebase-skill`.
 
-The actual source files are here:
+Actual source files:
 
 - [skills/codebase-skill/writing-styles](../../skills/codebase-skill/writing-styles)
 
@@ -10,11 +10,35 @@ The actual source files are here:
 
 If you are not sure which style to pick, start with `default`.
 
-`default` works well because it is:
+Why `default` is the safest first choice:
 
-- balanced
-- technical without being too rigid
-- suitable for most product and engineering posts
+- it works for most technical and product posts
+- it is not too specialized for one role
+- it handles both explanation and reflection reasonably well
+
+## How to choose a style
+
+Start with these three questions:
+
+1. What is this post mainly about?
+   - implementation, architecture, product decisions, experiments, UX changes
+2. Who is the reader?
+   - engineers, product team, designers, marketers, general users
+3. What should the post feel like?
+   - analytical, product-oriented, explanatory, conversational, story-driven
+
+## Quick chooser
+
+| Style | Best for | Tone |
+| --- | --- | --- |
+| `default` | implementation writeups, feature summaries, technical comparisons | balanced and safe |
+| `pm` | product decisions, strategy, priorities, trade-offs | product and decision focused |
+| `research` | experiments, evidence, benchmarks, limitations | analytical and strict |
+| `marketer` | growth tests, conversion, messaging experiments | persuasion and outcomes |
+| `designer` | UX improvements, interface changes, design rationale | context and intent |
+| `novel` | incident stories, personal journeys, debugging narratives | story-driven |
+| `podcast` | Q&A, easy explanations, spoken-style flow | conversational |
+| `vibe` | learning advice, career guidance, mentoring | light and encouraging |
 
 ## Style-by-style overview
 
@@ -36,8 +60,8 @@ Best for product and strategy writing.
 Best for:
 
 - explaining why a feature was built
-- documenting a product decision
-- describing trade-offs, priorities, and user problems
+- documenting why one option was chosen over another
+- describing user problems, priorities, and trade-offs
 
 ### `research`
 
@@ -109,8 +133,9 @@ Use a custom style file when:
 
 - your brand voice is already defined
 - you have explicit banned phrases
-- you want a fixed title or section structure
-- you want example paragraphs to strongly shape the output
+- you want fixed title or section rules
+- you want strong control over structure
+- you want example paragraphs to shape the output
 
 Starting file:
 
@@ -121,7 +146,7 @@ Starting file:
 1. Copy `custom-template.md`
 2. Fill in tone, structure, banned phrases, and example paragraphs
 3. Let the agent read that file
-4. The agent passes it as `customMarkdown`
+4. The agent passes it to MCP as `customMarkdown`
 5. The post is drafted from the returned guide
 6. The publish step can record it as `custom:<alias>`
 

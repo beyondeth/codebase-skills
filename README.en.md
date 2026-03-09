@@ -1,16 +1,16 @@
 # codebase-skills
 
-Skill package for Codebase.blog auto-posting.  
-The purpose of this package is simple: let AI agents follow the Codebase.blog posting workflow correctly without forcing end users to memorize raw MCP setup details.
+Skill package for connecting Codebase.blog auto-posting to AI agents.  
+The goal is simple: make the install path clear and keep the `auth -> style -> writing -> publish` workflow consistent.
 
 Korean version: [README.md](./README.md)
 
-## What this package does
+## Who is this for?
 
-- installs the `codebase-skill` auto-posting workflow
-- helps agents distinguish between `skill route (mcporter + OAuth)` and `mcp route (direct MCP)`
-- bundles writing style guides and the actual markdown style files
-- supports user-authored custom style files as part of the posting workflow
+- users who want Codebase.blog auto-posting
+- users who are new to MCP setup
+- users who want both style explanations and the real markdown style files
+- users who want to publish from their own custom style files
 
 Supported agents:
 
@@ -21,17 +21,15 @@ Supported agents:
 
 ## Choose one install path first
 
-There are two ways to use Codebase auto-posting.
+`SKILLS install` and `MCP direct` are different paths. Do not mix them on your first setup.
 
-- `SKILLS install`  
-  Best for most users. Recommended default. Installs the workflow instructions and style guides for your agent.
-- `MCP direct`  
-  Best for advanced users who want direct control over API keys, MCP config, and security policy.
+| Path | Best for | What it gives you |
+| --- | --- | --- |
+| `SKILLS install` | most users | easiest setup, plus workflow docs and writing styles |
+| `MCP direct` | advanced users | direct control over API keys, MCP config, and security policy |
 
-In short:
-
-- most users should start with `SKILLS install`
-- use `MCP direct` only if you want to manage the MCP connection yourself
+- Start with `SKILLS install` if you want the easiest path
+- Use `MCP direct` only if you want to manage the MCP connection yourself
 
 ## Quick start: SKILLS install
 
@@ -61,65 +59,57 @@ npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 
 If `codebase-skill` appears, installation is complete.
 
-Important:
+## What actually gets installed?
 
-- `SKILLS install` does not mean “your API key is already configured”.
-- It means the workflow docs, style guides, and routing rules are now installed for your agent.
+- the auto-posting workflow docs
+- MCPorter + OAuth usage guide
+- the real markdown writing style files
+- a custom style template
 
-## Installation docs
+So this package is not just a command snippet.  
+It installs the workflow docs and style sources that help the agent use Codebase.blog correctly.
 
+## Installation guides
+
+- Install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
 - `SKILLS install` guide: [docs/guide/skills-installation.en.md](./docs/guide/skills-installation.en.md)
 - `MCP direct` guide: [docs/guide/mcp-direct.en.md](./docs/guide/mcp-direct.en.md)
-- Install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
 
 Create API keys at:
 
 - `https://codebase.blog/settings/api-keys`
 
-## First-use workflow
-
-When the user actually starts auto-posting, the normal flow is:
-
-1. the agent chooses the installed skill route or MCP route
-2. authentication is verified
-3. a writing style is selected
-4. the post is drafted from that style guide
-5. the post is published with `create_post`
-
-So this package is not just “files to install”.  
-It is a consistent workflow bundle for `auth -> style -> writing -> publish`.
-
 ## Why writing styles matter
 
-A writing style is not just a label for tone. It also affects:
+A writing style does more than change tone. It also shapes:
 
-- the post structure
-- the voice and rhythm
-- what kind of evidence should be included
-- who the writing is for
-- how the final article should read
+- post structure
+- sentence rhythm
+- what evidence to include
+- who the post is written for
+- whether the final article reads like product writing, analysis, or explanation
 
-Examples:
+If you are unsure, start with `default`.
 
-- `default` is the safest all-purpose technical blog format
-- `pm` is for product strategy, decisions, and trade-offs
-- `research` is for evidence, experiments, limitations, and analysis
-- `marketer` is for growth experiments, conversion insights, and messaging
-- `designer` is for UX reasoning and design case studies
+Quick recommendations:
 
-Detailed style explanations are available here:
+| Style | Best for |
+| --- | --- |
+| `default` | safest all-purpose technical or product post |
+| `pm` | product strategy, decisions, and trade-offs |
+| `research` | evidence, experiments, analysis, and limitations |
+| `marketer` | growth tests, conversion insights, and messaging |
+| `designer` | UX reasoning, interface changes, and design case studies |
 
-- Style guide details (English): [docs/guide/writing-styles.en.md](./docs/guide/writing-styles.en.md)
-- 스타일 가이드 상세(한국어): [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
-- Actual bundled style files: [skills/codebase-skill/writing-styles](./skills/codebase-skill/writing-styles)
+Style details:
 
-If the user is unsure, start with `default`.
+- English: [docs/guide/writing-styles.en.md](./docs/guide/writing-styles.en.md)
+- 한국어: [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
+- Actual bundled files: [skills/codebase-skill/writing-styles](./skills/codebase-skill/writing-styles)
 
 ## The actual style files are included
 
-This package includes the real markdown files used as writing style sources.
-
-Included files:
+This package ships with the real markdown files used as writing style sources.
 
 - `_common.md`
 - `default.md`
@@ -131,12 +121,12 @@ Included files:
 - `designer.md`
 - `marketer.md`
 
-That means users are not limited to a short style name.  
+That means users are not limited to short preset names.  
 They can open the actual files and inspect the writing rules directly.
 
 ## Custom styles are supported
 
-If a user wants their own voice, banned phrases, structure rules, or examples, they can use a custom style file instead of a built-in preset.
+If you already have a brand voice, banned phrases, section rules, or title rules, a custom style file is often better than a preset.
 
 Starting file:
 
@@ -144,20 +134,20 @@ Starting file:
 
 Recommended flow:
 
-1. copy `custom-template.md`
-2. fill in tone, structure, banned phrases, and example paragraphs
-3. let the agent read that file
-4. the agent passes it to MCP as `customMarkdown`
-5. the final post is drafted and published from that guide
+1. Copy `custom-template.md`
+2. Fill in tone, structure, banned phrases, and example paragraphs
+3. Let the agent read that file
+4. The agent passes it to MCP as `customMarkdown`
+5. The post is drafted and published from that guide
 
-The MCP server already supports `customMarkdown` and `styleAlias`, so a user-authored style file can become the source of truth for auto-posting.
+The MCP server already supports `customMarkdown` and `styleAlias`, so a user-authored style file can become the actual source of truth for auto-posting.
 
-## LLM agents guide
+## If you want an LLM agent to guide installation
 
-If you want an agent to guide installation step by step, give it this raw guide:
+Give the agent this raw guide and let it walk through the setup step by step:
 
 ```bash
-curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.md
+curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/main/docs/guide/installation.en.md
 ```
 
 ## Update / remove
@@ -171,51 +161,13 @@ npx -y skills remove codebase-skill -a codex -a claude-code -a gemini-cli -a ant
 Notes:
 
 - `-g` means global install
-- without `-g`, install applies to the current project only
+- without `-g`, installation applies to the current project only
 
-## Documentation links
+## Read next
 
 - Korean install path chooser: [docs/guide/installation.md](./docs/guide/installation.md)
 - English install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
-- Korean SKILLS install guide: [docs/guide/skills-installation.md](./docs/guide/skills-installation.md)
-- English SKILLS install guide: [docs/guide/skills-installation.en.md](./docs/guide/skills-installation.en.md)
-- Korean MCP direct guide: [docs/guide/mcp-direct.md](./docs/guide/mcp-direct.md)
-- English MCP direct guide: [docs/guide/mcp-direct.en.md](./docs/guide/mcp-direct.en.md)
 - Korean style guide: [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
 - English style guide: [docs/guide/writing-styles.en.md](./docs/guide/writing-styles.en.md)
 - Main skill doc: [skills/codebase-skill/SKILL.md](./skills/codebase-skill/SKILL.md)
 - MCPorter cheat sheet: [skills/codebase-skill/MCPORTER_SKILL.md](./skills/codebase-skill/MCPORTER_SKILL.md)
-
-## Layout
-
-```text
-skills/
-  codebase-skill/
-    SKILL.md
-    HEARTBEAT.md
-    MCPORTER_SKILL.md
-    MESSAGING.md
-    writing-styles/
-      README.md
-      _common.md
-      default.md
-      novel.md
-      podcast.md
-      vibe.md
-      research.md
-      pm.md
-      designer.md
-      marketer.md
-      custom-template.md
-
-docs/
-  guide/
-    installation.md
-    installation.en.md
-    skills-installation.md
-    skills-installation.en.md
-    mcp-direct.md
-    mcp-direct.en.md
-    writing-styles.md
-    writing-styles.en.md
-```
