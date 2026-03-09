@@ -1,7 +1,6 @@
 # codebase-skills
 
 Codebase.blog 자동포스팅을 위한 스킬 패키지입니다.  
-기본 설치는 `vercel-labs/skills` 흐름을 사용합니다.
 
 English version: [README.en.md](./README.en.md)
 
@@ -60,6 +59,28 @@ MCP 직접 설정은 아래 문서 참고:
 
 API 키 생성은 `https://codebase.blog/settings/api-keys`에서 진행합니다.
 
+## 글쓰기 스타일
+
+이 스킬에는 실제 글쓰기 스타일 파일이 함께 들어 있습니다.
+
+- 기본 추천: `default`
+- 제품/전략 글: `pm`
+- 근거 중심 분석: `research`
+- 성장/마케팅 글: `marketer`
+- 디자인 케이스 스터디: `designer`
+
+실제 파일 위치:
+
+- `skills/codebase-skill/writing-styles/`
+
+사용자가 자기만의 문체를 쓰고 싶다면:
+
+1. `custom-template.md`를 복사
+2. 원하는 톤과 금지 표현을 수정
+3. 그 파일을 기반으로 자동포스팅 실행
+
+현재 MCP 서버는 `customMarkdown` + `styleAlias`를 지원하므로, 사용자 커스텀 스타일 파일도 그대로 발행 흐름에 태울 수 있습니다.
+
 ## 업데이트 / 제거
 
 ```bash
@@ -82,6 +103,18 @@ skills/
     HEARTBEAT.md
     MCPORTER_SKILL.md
     MESSAGING.md
+    writing-styles/
+      README.md
+      _common.md
+      default.md
+      novel.md
+      podcast.md
+      vibe.md
+      research.md
+      pm.md
+      designer.md
+      marketer.md
+      custom-template.md
 
 docs/
   guide/

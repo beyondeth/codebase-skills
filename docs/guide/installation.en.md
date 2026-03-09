@@ -61,6 +61,10 @@ Verify:
 npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 ```
 
+After installation, the actual style files are available under `skills/codebase-skill/writing-styles/`.
+If the user is unsure, start with `default`.
+If the user wants a custom voice, have them copy `custom-template.md`, edit it, and use that file as the style source.
+
 ### Step 2B) If user chose MCP direct
 
 Use `<YOUR_API_KEY>` and configure selected agents only.
@@ -136,4 +140,3 @@ If it fails, collect:
 
 - Never expose full API keys in logs/chat history.
 - Do not switch auth mode silently; confirm with user first.
-

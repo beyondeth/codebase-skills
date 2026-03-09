@@ -11,24 +11,30 @@ This file is a command-first cheat sheet for publishing via the Codebase.blog MC
 ## 0) Setup (Once)
 
 ```bash
-# DEV (DEFAULT)
+# PROD (DEFAULT)
 npx -y mcporter config add codebase-blog-oauth \
+  --url https://mcp.codebase.blog/mcp-remote \
+  --auth oauth \
+  --oauth-redirect-url http://127.0.0.1:33333/callback \
+  --scope home
+
+# DEV (local testing only)
+npx -y mcporter config add codebase-blog-oauth-dev \
   --url http://localhost:3002/mcp-remote \
   --auth oauth \
   --allow-http \
   --oauth-redirect-url http://127.0.0.1:33334/callback \
   --scope project
 
-# PROD (explicit opt-in)
-npx -y mcporter config add codebase-blog-oauth-prod \
-  --url https://mcp.codebase.blog/mcp-remote \
-  --auth oauth \
-  --oauth-redirect-url http://127.0.0.1:33333/callback \
-  --scope home
-
 # Browser OAuth (first time only)
 npx -y mcporter auth codebase-blog-oauth
 ```
+
+## Style Notes
+
+- `default` is the safe starting point for most users.
+- Built-in style files are packaged under `writing-styles/`.
+- If the user already has a custom markdown style file, prefer that over presets and pass it through `customMarkdown`.
 
 ## 1) Safe Gate (Always First)
 
@@ -73,3 +79,4 @@ npx -y mcporter call 'codebase-blog-oauth.finalize_uploaded_image(fileKey: "uplo
 
 - If the login UI does not appear: you may already be logged in. Try `npx -y mcporter auth codebase-blog-oauth --reset`.
 - If you see `SSE error: Invalid content type, expected "text/event-stream"` during `auth`: tokens may still be saved. Run `check_auth` to confirm.
+- For local development only, authenticate `codebase-blog-oauth-dev`.

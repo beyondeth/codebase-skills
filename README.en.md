@@ -1,7 +1,6 @@
 # codebase-skills
 
 Skill package for Codebase.blog auto-posting.  
-Designed for the `vercel-labs/skills` installation flow.
 
 Korean version: [README.md](./README.md)
 
@@ -54,6 +53,28 @@ curl -s https://raw.githubusercontent.com/beyondeth/codebase-skills/refs/heads/m
 - English: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
 
 Create API keys at: `https://codebase.blog/settings/api-keys`
+
+## Writing Styles
+
+This package now includes the actual writing style markdown files used by the skill.
+
+- Recommended default: `default`
+- Product/strategy writing: `pm`
+- Evidence-heavy analysis: `research`
+- Growth/performance writing: `marketer`
+- Design case studies: `designer`
+
+File location:
+
+- `skills/codebase-skill/writing-styles/`
+
+If a user wants a custom voice:
+
+1. copy `custom-template.md`
+2. edit the tone, structure, forbidden phrases, and examples
+3. run auto-posting with that file as the style source
+
+The MCP server already supports `customMarkdown` and `styleAlias`, so user-authored style files can be used directly in the posting workflow.
 
 ## Update / Remove
 

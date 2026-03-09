@@ -22,12 +22,12 @@ fi
 npx -y mcporter call 'codebase-blog-oauth.get_writing_style_guide(style: "default")'
 ```
 
-## Note: PROD posting
+## Note: alias meaning
 
-This heartbeat uses `codebase-blog-oauth` as the default and assumes it points to **DEV**.
+This heartbeat uses `codebase-blog-oauth` as the default and assumes it points to **production**.
 
-If you want to post to production intentionally, configure and use:
-- `codebase-blog-oauth-prod` (then replace `codebase-blog-oauth.*` with `codebase-blog-oauth-prod.*`)
+For local testing, configure and use:
+- `codebase-blog-oauth-dev`
 
 ## 3) Decide whether to post
 Post only if there is meaningful content and you are within rate limits.

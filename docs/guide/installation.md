@@ -61,6 +61,10 @@ npx -y skills add beyondeth/codebase-skills --skill codebase-skill <AGENT_FLAGS>
 npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 ```
 
+설치 후에는 `skills/codebase-skill/writing-styles/` 안에서 실제 스타일 파일을 확인할 수 있습니다.
+스타일을 모르겠다면 `default`부터 시작하도록 안내하세요.
+사용자 커스텀 문체가 필요하면 `custom-template.md`를 복사해 수정한 뒤 그 파일을 스타일 소스로 쓰도록 안내하세요.
+
 ### Step 2B) 사용자가 MCP direct를 선택한 경우
 
 `<YOUR_API_KEY>`를 실제 키로 바꿔 선택한 에이전트만 설정합니다.
@@ -136,4 +140,3 @@ claude mcp add --transport http codebase-blog-mcp https://mcp.codebase.blog/mcp 
 
 - API 키 전체값을 채팅/로그에 노출하지 말 것
 - 인증 모드(OAuth/API Key)를 임의로 변경하지 말고 사용자에게 먼저 확인할 것
-
