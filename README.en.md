@@ -1,16 +1,9 @@
 # codebase-skills
 
-Skill package for connecting Codebase.blog auto-posting to AI agents.  
-The goal is simple: make the install path clear and keep the `auth -> style -> writing -> publish` workflow consistent.
+Codebase.blog is a platform that turns conversations and work with AI agents into blog posts.  
+Install `codebase-skill` to use auto-posting more easily in Codex, Claude Code, Gemini CLI, and Antigravity.
 
 Korean version: [README.md](./README.md)
-
-## Who is this for?
-
-- users who want Codebase.blog auto-posting
-- users who are new to MCP setup
-- users who want both style explanations and the real markdown style files
-- users who want to publish from their own custom style files
 
 Supported agents:
 
@@ -19,21 +12,9 @@ Supported agents:
 - `gemini-cli`
 - `antigravity`
 
-## Choose one install path first
+## Easiest install
 
-`SKILLS install` and `MCP direct` are different paths. Do not mix them on your first setup.
-
-| Path | Best for | What it gives you |
-| --- | --- | --- |
-| `SKILLS install` | most users | easiest setup, plus workflow docs and writing styles |
-| `MCP direct` | advanced users | direct control over API keys, MCP config, and security policy |
-
-- Start with `SKILLS install` if you want the easiest path
-- Use `MCP direct` only if you want to manage the MCP connection yourself
-
-## Quick start: SKILLS install
-
-This is the recommended starting point.
+Most users should start with `SKILLS install`.
 
 ```bash
 npx -y skills add beyondeth/codebase-skills \
@@ -59,17 +40,7 @@ npx -y skills list -g -a codex -a claude-code -a gemini-cli -a antigravity
 
 If `codebase-skill` appears, installation is complete.
 
-## What actually gets installed?
-
-- the auto-posting workflow docs
-- MCPorter + OAuth usage guide
-- the real markdown writing style files
-- a custom style template
-
-So this package is not just a command snippet.  
-It installs the workflow docs and style sources that help the agent use Codebase.blog correctly.
-
-## Installation guides
+## Other install paths
 
 - Install path chooser: [docs/guide/installation.en.md](./docs/guide/installation.en.md)
 - `SKILLS install` guide: [docs/guide/skills-installation.en.md](./docs/guide/skills-installation.en.md)
@@ -79,16 +50,9 @@ Create API keys at:
 
 - `https://codebase.blog/settings/api-keys`
 
-## Why writing styles matter
+## Writing styles
 
-A writing style does more than change tone. It also shapes:
-
-- post structure
-- sentence rhythm
-- what evidence to include
-- who the post is written for
-- whether the final article reads like product writing, analysis, or explanation
-
+This skill includes the real markdown writing style files.  
 If you are unsure, start with `default`.
 
 Quick recommendations:
@@ -107,9 +71,7 @@ Style details:
 - 한국어: [docs/guide/writing-styles.md](./docs/guide/writing-styles.md)
 - Actual bundled files: [skills/codebase-skill/writing-styles](./skills/codebase-skill/writing-styles)
 
-## The actual style files are included
-
-This package ships with the real markdown files used as writing style sources.
+## Custom styles
 
 - `_common.md`
 - `default.md`
@@ -121,12 +83,7 @@ This package ships with the real markdown files used as writing style sources.
 - `designer.md`
 - `marketer.md`
 
-That means users are not limited to short preset names.  
-They can open the actual files and inspect the writing rules directly.
-
-## Custom styles are supported
-
-If you already have a brand voice, banned phrases, section rules, or title rules, a custom style file is often better than a preset.
+If you already have a brand voice, banned phrases, or title rules, use a custom style file instead of a preset.
 
 Starting file:
 
@@ -140,7 +97,8 @@ Recommended flow:
 4. The agent passes it to MCP as `customMarkdown`
 5. The post is drafted and published from that guide
 
-The MCP server already supports `customMarkdown` and `styleAlias`, so a user-authored style file can become the actual source of truth for auto-posting.
+The MCP server already supports `customMarkdown` and `styleAlias`.  
+That means a user-authored style file can become the actual source of truth for auto-posting.
 
 ## If you want an LLM agent to guide installation
 
